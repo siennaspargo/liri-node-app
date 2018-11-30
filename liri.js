@@ -1,24 +1,23 @@
-console.log("welcome to liri bot, man.");
+console.log("welcome to liri bot.");
 
+//  DEPENDENCIES ||||||||||||||||||||||||||||||||||||
 require("dotenv").config();
+//  Spotify 
+var Spotify = require('node-spotify-api');
+//  Spotify api keys
+var keys = require('./keys');
 
+
+// SPOTIFY |||||||||||||||||||||||||||||||||||||||||
+// spotify search api / client id and secret id
 var spotify = new Spotify(keys.spotify);
 
-spotify - this - song
+// // return artist name
+// var returnArtist = function (artist) {
+//   return artist.name;
+// };
 
-
-//  Spotify npm dependency
-var Spotify = require('node-spotify-api');
-// api keys
-var keys = require('keys');
-
-var spotify = new Spotify({
-  id: SPOTIFY_ID,
-  secret: SPOTIFY_SECRET
-});
-
-
-
+// return spotify info ( artist, tracks )
 function callSpotify() {
   spotify.search({
     type: 'track',
@@ -29,14 +28,16 @@ function callSpotify() {
       return console.log(err);
     } else {
       //creating up a variable with all the info needed from spotify
-      var artistName = "The Artist Name is " + data.tracks.items[0].artists[0].name;
-      var songName = "The Song Name is " + data.tracks.items[0].name;
-      var albumName = "This Song is in the Album " + data.tracks.items[0].album.name;
-      var previewUrl = "The Preview URL to this song is " + data.tracks.items[0].preview_url;
+      var artistName = "The artist is " + data.tracks.items[0].artists[0].name;
+      var songName = "The song is " + data.tracks.items[0].name;
+      var albumName = "In the album " + data.tracks.items[0].album.name;
+      var previewUrl = "A Preview URL to this song is " + data.tracks.items[0].preview_url;
+
       //display the data in console.log
       var displayData = "\n" + artistName + "\n" + songName + "\n" + albumName + "\n" + previewUrl + "\n";
       console.log("\n" + displayData);
-      //appending to the log.txt document
+
+      //append info to the log.txt document
       fs.appendFile("log.txt", displayData, function (err) {
         if (err) {
           return console.log(err);
@@ -45,6 +46,9 @@ function callSpotify() {
     }
   })
 };
+
+
+// OMDB
 
 var request = require("request");
 
@@ -63,9 +67,7 @@ for (var i = 2; i < nodeArgs.length; i++) {
 
     movieName = movieName + "+" + nodeArgs[i];
 
-  }
-
-  else {
+  } else {
 
     movieName += nodeArgs[i];
 
@@ -78,7 +80,7 @@ var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey
 // This line is just to help us debug against the actual URL.
 console.log(queryUrl);
 
-request(queryUrl, function(error, response, body) {
+request(queryUrl, function (error, response, body) {
 
   // If the request is successful
   if (!error && response.statusCode === 200) {
@@ -88,3 +90,4 @@ request(queryUrl, function(error, response, body) {
     console.log("Release Year: " + JSON.parse(body).Year);
   }
 });
+
