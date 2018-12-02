@@ -25,18 +25,17 @@ var getArtistNames = function (artist) {
 };
 
 // return spotify info ( artist, tracks )
-var callSpotify = function(songName) {
+var callSpotify = function (songName) {
   if (songName === undefined) {
     songName = "hmmmmmmmmmm";
   }
 
-  spotify.search(
-    {
+  spotify.search({
       type: "track",
       query: songName,
       limit: 4
     },
-    function(err, data) {
+    function (err, data) {
       if (err) {
         return console.log(err);
       }
@@ -55,53 +54,57 @@ var callSpotify = function(songName) {
   );
 };
 
-// // OMDB
+//  |||||||||||||||||||||||||| O M D B ||||||||||||||||||||||||||||||| //
 
-// var request = require("request");
+// Include the request npm package (Don't forget to run "npm install request" in this folder first!)
+var request = require("request");
 
-// // Store all of the arguments in an array
-// var nodeArgs = process.argv;
+var callMovie = function(movieName) {
+  if (movieName === undefined) {
+    movieName = "Mr Nobody";
+  }
 
-// // Create an empty variable for holding the movie name
-// var movieName = "";
+// Then run a request to the OMDB API with the movie specified
+var urlRequest = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=fe69d00f";
 
-// // Loop through all the words in the node argument
-// // And do a little for-loop magic to handle the inclusion of "+"s
-// for (var i = 2; i < nodeArgs.length; i++) {
+// Make a request for a user with a given ID
+axios.get(urlRequest)
+  .then(function (response) {
+    var movieData = response.data;
 
-//   //for the first word and the last word, don't add a plus
-//   if (i > 2 && i < nodeArgs.length) {
+    console.log("Title: " + movieData.Title);
+    console.log("Year: " + movieData.Year);
+    console.log("Rated: " + movieData.Rated);
+    console.log("IMDB Rating: " + movieData.imdbRating);
+    console.log("Country: " + movieData.Country);
+    console.log("Language: " + movieData.Language);
+    console.log("Plot: " + movieData.Plot);
+    console.log("Actors: " + movieData.Actors);
+    console.log("Rotten Tomatoes Rating: " + movieData.Ratings[1].Value);
+  })
+};
+ 
 
-//     movieName = movieName + "+" + nodeArgs[i];
 
-//   } else {
+//  |||||||||||||||||||||||||| Bands In Town ||||||||||||||||||||||||||||||| //
 
-//     movieName += nodeArgs[i];
 
-//   }
-// }
-
-// // Then run a request to the OMDB API with the movie specified
-// var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-
-// // This line is just to help us debug against the actual URL.
-// console.log(queryUrl);
-
-// request(queryUrl, function (error, response, body) {
-
-//   // If the request is successful
-//   if (!error && response.statusCode === 200) {
-
-//     // Parse the body of the site and recover just the imdbRating
-//     // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
-//     console.log("Release Year: " + JSON.parse(body).Year);
-//   }
-// });
+var callConcerts = function(concertShows) {
+  return 
+}
 
 
 
-var readInput = function() {
-  fs.readFile("random.txt", "utf8", function(error, data) {
+
+
+
+
+
+
+
+// ||||||||||||||||||||||| readfile fs |||||||||||||||||||||||||||
+var readInput = function () {
+  fs.readFile("random.txt", "utf8", function (error, data) {
     console.log(data);
 
     var dataArr = data.split(",");
@@ -115,29 +118,31 @@ var readInput = function() {
 };
 
 
-// switch case to tend to whatever has been typed in the command line
-var request = function(caseData, functionData) {
+// ||||||||||||||||||||||| switch case to determin input in command line |||||||||||||||||||||||||||
+
+// switch case to respond to whatever has been requested in the command line
+var request = function (caseData, functionData) {
   switch (caseData) {
-  case "concert-this":
-    getMyBands(functionData);
-    break;
-  case "spotify-this-song":
-    callSpotify(functionData);
-    break;
-  case "movie-this":
-    getMeMovie(functionData);
-    break;
-  case "do-what-it-says":
-    readInput();
-    break;
-  default:
-    console.log("LIRI isn't bringing anything back for that.");
+    case "concert-this":
+      callConcerts(functionData);
+      break;
+    case "spotify-this-song":
+      callSpotify(functionData);
+      break;
+    case "movie-this":
+    callMovie(functionData);
+      break;
+    case "do-what-it-says":
+      readInput();
+      break;
+    default:
+      console.log("LIRI isn't bringing anything back for that.");
   }
 };
 
-
+// ||||||||||||||||||||||| take in command |||||||||||||||||||||||||||
 // arguments
-var runThis = function(argOne, argTwo) {
+var runThis = function (argOne, argTwo) {
   request(argOne, argTwo);
 };
 
