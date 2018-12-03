@@ -1,4 +1,5 @@
-# liri-node-app
+# Liri-Node-App
+# Week 10
 
 # This is a command line application that utilizes node npm packages json, moment, spotify-node-api, axios and request.
 
