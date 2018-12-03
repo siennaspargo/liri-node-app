@@ -86,11 +86,12 @@ var callConcerts = function (artist) {
 var request = require("request")
 // axios npm package
 var axios = require("axios")
-
+// moviename function
 var callMovie = function (movieName) {
   if (movieName === undefined) {
     movieName = "Mr Nobody"
-  };
+    console.log(movieName)
+  }
 
   // Then run a request to the OMDB API with the movie specified
   var urlRequest = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=fe69d00f";
@@ -172,8 +173,8 @@ var request = function (caseData, functionData) {
   }
 }
 
-// // ||||||||||||||||||||||| take in command |||||||||||||||||||||||||||
-// // arguments
+// ||||||||||||||||||||||| take in command |||||||||||||||||||||||||||
+// arguments
 var runThis = function (argOne, argTwo) {
   request(argOne, argTwo);
 }
