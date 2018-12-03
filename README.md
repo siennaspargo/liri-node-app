@@ -1,11 +1,14 @@
 # liri-node-app
 
-Make it so liri.js can take in one of the following commands:
+#This is a command line application that utilizes node npm packages json, moment, spotify-node-api, axios and request.
 
-concert-this
+##How to make the application preform tasks: 
 
-spotify-this-song
+###In the command line, type one of the following commands: concert-this, spotify-this-song, movie-this, do-what-it-says followed by what you would like to search for. 
 
-movie-this
+###Examples:
+####Concert-this:  node liri.js concert-this Santana
+####spotify-this-song: node liri.js spotify-this-song Black Magic Woman
+####movie-this: Mr Nobody
+####do-what-it-says: node liri.js do-what-it-says
 
-do-what-it-says
