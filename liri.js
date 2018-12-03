@@ -1,20 +1,21 @@
+console.log("Developer: Sienna Spargo")
 console.log("LIRI BOT")
 console.log("A command line app.")
 console.log("Concert? Song look up? Movie look up? Something random?")
-console.log("ASK ME FOR concert-this or spotify-this-song or movie-this or do-what-it-says.");
+console.log("ASK ME FOR concert-this or spotify-this-song or movie-this or do-what-it-says.")
 
 //  DEPENDENCIES ||||||||||||||||||||||||||||||||||||
-require("dotenv").config();
+require("dotenv").config()
 //  Spotify 
-var Spotify = require("node-spotify-api");
+var Spotify = require("node-spotify-api")
 //  Spotify api keys
-var keys = require('./keys');
+var keys = require('./keys')
 // FS for read/write.
-var fs = require("fs");
+var fs = require("fs")
 
 //  |||||||||||||||||||||||||| Spotify ||||||||||||||||||||||||||||||| //
 // spotify search api / client id and secret id
-var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify)
 
 
 var artistName = function(artist) {
@@ -24,7 +25,7 @@ var artistName = function(artist) {
 // return spotify info ( artist, tracks )
 var callSpotify = function (songName) {
   if (songName === undefined) {
-    songName = "'The Sign', by Ace of Base";
+    songName = "'The Sign', by Ace of Base"
   }
   spotify.search({
       type: "track",
@@ -33,18 +34,18 @@ var callSpotify = function (songName) {
     },
     function (err, data) {
       if (err) {
-        return console.log(err);
+        return console.log(err)
       }
 
       var songs = data.tracks.items;
 
       for (var i = 0; i < songs.length; i++) {
-        console.log(i);
-        console.log("artist: " + songs[i].artists.map(artistName));
-        console.log("song: " + songs[i].name);
-        console.log("preview song url: " + songs[i].preview_url);
-        console.log("album: " + songs[i].album.name);
-        console.log("||||||||||||||||||||||||||||||");
+        console.log(i)
+        console.log("artist: " + songs[i].artists.map(artistName))
+        console.log("song: " + songs[i].name)
+        console.log("preview song url: " + songs[i].preview_url)
+        console.log("album: " + songs[i].album.name)
+        console.log("||||||||||||||||||||||||||||||")
       }
     }
   );
@@ -53,8 +54,8 @@ var callSpotify = function (songName) {
 
 //  |||||||||||||||||||||||||| Bands In Town ||||||||||||||||||||||||||||||| //
 var callConcerts = function (artist) {
-  var moment = require("moment");
-  var request = require("request");
+  var moment = require("moment")
+  var request = require("request")
 
   var requestUrl = ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
 
@@ -65,14 +66,14 @@ var callConcerts = function (artist) {
       var data = JSON.parse(body)
 
       for (var i = 0; i < 6; i++) {
-        var date = "Concert Date: " + moment(data[i].datetime).format('MM/DD/YYYY');
-        var venue = "Venue #: " + i + " ";
-        var name = "@: " + data[i].venue.name+ " ";
-        var lineUp = "Concert lineup: " + data[i].lineup+ " ";
-        var location = "Location: " + data[i].venue.city + ", " + data[i].venue.country+ " ";
+        var date = "Concert Date: " + moment(data[i].datetime).format('MM/DD/YYYY')
+        var venue = "Venue #: " + i + " "
+        var name = "@: " + data[i].venue.name+ " "
+        var lineUp = "Concert lineup: " + data[i].lineup+ " "
+        var location = "Location: " + data[i].venue.city + ", " + data[i].venue.country+ " "
 
         // console result
-        console.log(venue + name + lineUp + location + date);
+        console.log(venue + name + lineUp + location + date)
 
       }
     }
@@ -81,14 +82,14 @@ var callConcerts = function (artist) {
 
 //  |||||||||||||||||||||||||| O M D B ||||||||||||||||||||||||||||||| //
 
-// Include the request npm package (Don't forget to run "npm install request" in this folder first!)
-var request = require("request");
-// axios npm
-var axios = require("axios");
+// request npm package
+var request = require("request")
+// axios npm package
+var axios = require("axios")
 
 var callMovie = function (movieName) {
   if (movieName === undefined) {
-    movieName = "Mr Nobody";
+    movieName = "Mr Nobody"
   };
 
   // Then run a request to the OMDB API with the movie specified
@@ -97,17 +98,17 @@ var callMovie = function (movieName) {
   // Make a request for a user with a given ID
   axios.get(urlRequest)
     .then(function (response) {
-      var movieData = response.data;
+      var movieData = response.data
 
-      console.log("Title: " + movieData.Title);
-      console.log("Year: " + movieData.Year);
-      console.log("Rated: " + movieData.Rated);
-      console.log("IMDB Rating: " + movieData.imdbRating);
-      console.log("Country: " + movieData.Country);
-      console.log("Language: " + movieData.Language);
-      console.log("Plot: " + movieData.Plot);
-      console.log("Actors: " + movieData.Actors);
-      console.log("Rotten Tomatoes Rating: " + movieData.Ratings[1].Value);
+      console.log("Title: " + movieData.Title)
+      console.log("Year: " + movieData.Year)
+      console.log("Rated: " + movieData.Rated)
+      console.log("IMDB Rating: " + movieData.imdbRating)
+      console.log("Country: " + movieData.Country)
+      console.log("Language: " + movieData.Language)
+      console.log("Plot: " + movieData.Plot)
+      console.log("Actors: " + movieData.Actors)
+      console.log("Rotten Tomatoes Rating: " + movieData.Ratings[1].Value)
     })
 };
 
@@ -116,7 +117,7 @@ var callMovie = function (movieName) {
 function log(results) {
   fs.appendFile("log.txt", "utf8", function (err, data) {
       if (err) {
-       console.log(err);
+       console.log(err)
       }
     }
   )};
@@ -173,8 +174,8 @@ var request = function (caseData, functionData) {
 
 // // ||||||||||||||||||||||| take in command |||||||||||||||||||||||||||
 // // arguments
-// var runThis = function (argOne, argTwo) {
-//   request(argOne, argTwo);
-// }
+var runThis = function (argOne, argTwo) {
+  request(argOne, argTwo);
+}
 
-// runThis(process.argv[2], process.argv.slice(3).join(" "));
+runThis(process.argv[2], process.argv.slice(3).join(" "));
