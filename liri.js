@@ -1,4 +1,7 @@
-console.log("welcome to liri bot.");
+console.log("LIRI BOT")
+console.log("A command line app.")
+console.log("Concert? Song look up? Movie look up? Something random?")
+console.log("ASK ME FOR concert-this or spotify-this-song or movie-this or do-what-it-says.");
 
 //  DEPENDENCIES ||||||||||||||||||||||||||||||||||||
 require("dotenv").config();
@@ -9,22 +12,20 @@ var keys = require('./keys');
 // FS for read/write.
 var fs = require("fs");
 
-
-// SPOTIFY |||||||||||||||||||||||||||||||||||||||||
+//  |||||||||||||||||||||||||| Spotify ||||||||||||||||||||||||||||||| //
 // spotify search api / client id and secret id
 var spotify = new Spotify(keys.spotify);
 
-// return artist name
-var getArtistNames = function (artist) {
-  return artist.name;
-};
+
+var artistName = function(artist) {
+  return artist.name
+}
 
 // return spotify info ( artist, tracks )
 var callSpotify = function (songName) {
   if (songName === undefined) {
     songName = "'The Sign', by Ace of Base";
   }
-
   spotify.search({
       type: "track",
       query: songName,
@@ -39,7 +40,7 @@ var callSpotify = function (songName) {
 
       for (var i = 0; i < songs.length; i++) {
         console.log(i);
-        console.log("artist: " + songs[i].artists.map(getArtistNames));
+        console.log("artist: " + songs[i].artists.map(artistName));
         console.log("song: " + songs[i].name);
         console.log("preview song url: " + songs[i].preview_url);
         console.log("album: " + songs[i].album.name);
@@ -65,7 +66,6 @@ var callConcerts = function (artist) {
 
       for (var i = 0; i < 6; i++) {
         var date = "Concert Date: " + moment(data[i].datetime).format('MM/DD/YYYY');
-
         var venue = "Venue #: " + i + " ";
         var name = "@: " + data[i].venue.name+ " ";
         var lineUp = "Concert lineup: " + data[i].lineup+ " ";
@@ -145,8 +145,8 @@ var readInput = function () {
       console.log(err)
     }
 
-    var dataArr = data.split(",")
-    songName(dataArr[1])
+    // var dataArr = data.split(",")
+    // songName(dataArr[1])
   })
 };
 
@@ -171,10 +171,10 @@ var request = function (caseData, functionData) {
   }
 }
 
-// ||||||||||||||||||||||| take in command |||||||||||||||||||||||||||
-// arguments
-var runThis = function (argOne, argTwo) {
-  request(argOne, argTwo);
-}
+// // ||||||||||||||||||||||| take in command |||||||||||||||||||||||||||
+// // arguments
+// var runThis = function (argOne, argTwo) {
+//   request(argOne, argTwo);
+// }
 
-runThis(process.argv[2], process.argv.slice(3).join(" "));
+// runThis(process.argv[2], process.argv.slice(3).join(" "));
